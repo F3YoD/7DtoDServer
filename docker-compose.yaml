@@ -1,0 +1,22 @@
+version: "2"
+services:
+  7dtdserver:
+    image: vinanrra/7dtd-server
+    container_name: 7dtdserver
+    environment:
+      - START_MODE=1 #Change between START MODES
+      - VERSION=stable # Change between 7 days to die versions
+      - PUID=1004 # Remember to use same as your user
+      - PGID=1004 # Remember to use same as your user
+      - TimeZone=Europe/Paris # Optional - Change Timezone
+    volumes:
+      - ./7DaysToDie:/home/sdtdserver/.local/share/7DaysToDie/
+      - ./LGSM-Config:/home/sdtdserver/lgsm/config-lgsm/sdtdserver
+      - ./ServerFiles:/home/sdtdserver/serverfiles/ # Optional - serverfiles folder
+      - ./backups:/home/sdtdserver/lgsm/backup/ # Optional - If BAKCUP=NO, backups folder
+    ports:
+      - 26900:26900/tcp # Default game ports
+      - 26900:26900/udp # Default game ports
+      - 26901:26901/udp # Default game ports
+      - 26902:26902/udp # Default game ports
+    restart: unless-stopped # INFO - NEVER USE WITH START_MODE=4 or START_MODE=0
